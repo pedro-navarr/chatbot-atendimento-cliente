@@ -1,91 +1,135 @@
 version: "3.1"
 
 nlu:
-- intent: greet
+- intent: saudacao
   examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - oi
+    - olá
+    - bom dia
+    - boa tarde
+    - boa noite
+    - e aí
+    - salve
+    - tudo bem?
+    - como vai?
+    - oi tudo bem
 
-- intent: goodbye
+- intent: despedida
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - tchau
+    - até logo
+    - adeus
+    - até mais
+    - obrigado e tchau
+    - por enquanto é só
+    - até a próxima
+    - me desculpe, preciso ir
 
-- intent: affirm
+- intent: horario_funcionamento
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - qual o horário de funcionamento?
+    - vocês abrem aos sábados?
+    - até que horas funciona?
+    - qual o horário de vocês?
+    - que horas vocês abrem?
+    - qual o expediente?
+    - funciona no fim de semana?
 
-- intent: deny
+- intent: pergunta_produto
   examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - vocês vendem notebooks?
+    - tem celulares?
+    - quero saber sobre seus produtos
+    - que produtos vocês oferecem?
+    - quais produtos estão disponíveis?
+    - me fale sobre seus produtos
+    - o que vocês têm para vender?
+    - quais são os itens de vocês?
 
-- intent: mood_great
+- intent: preco_produto
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - quanto custa um [notebook](produto)?
+    - qual o preço do [celular](produto)?
+    - queria saber o valor do [tablet](produto).
+    - quanto é o [fone de ouvido](produto)?
+    - valor do [computador](produto)
+    - preço do [monitor](produto)
+    - queria saber o preço de [geladeira](produto)
+    - me fala o preço de [televisão](produto)
 
-- intent: mood_unhappy
+- intent: formas_pagamento
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - como posso pagar?
+    - aceitam cartão de crédito?
+    - posso pagar com boleto?
+    - quais as formas de pagamento?
+    - vocês aceitam pix?
+    - tem parcelamento?
+    - quais são os métodos de pagamento?
+
+- intent: prazo_entrega
+  examples: |
+    - qual o prazo de entrega?
+    - em quanto tempo chega?
+    - demora para entregar?
+    - quando meu pedido chega?
+    - qual a data de entrega?
+    - tempo de entrega
+    - entrega rápida?
+
+- intent: pedido_ajuda
+  examples: |
+    - preciso de ajuda
+    - pode me ajudar?
+    - estou com um problema
+    - suporte, por favor
+    - me ajude
+    - não consigo
+    - preciso de assistência
+
+- intent: reclamacao
+  examples: |
+    - quero reclamar
+    - tive um problema com meu pedido
+    - estou insatisfeito com o atendimento
+    - meu produto veio com defeito
+    - preciso fazer uma reclamação
+    - não gostei do serviço
+    - estou com um problema
+
+- intent: agendar_atendimento
+  examples: |
+    - quero agendar um atendimento para às [14h](horario)
+    - posso marcar uma conversa às [10h](horario)?
+    - agende para mim às [9:30](horario)
+    - marcar para as [duas da tarde](horario)
+    - quero agendar uma visita para [amanhã](data) às [15h](horario)
+    - posso marcar para o dia [20 de maio](data)?
+    - agendar para [quarta-feira](data) de manhã
+    - quero marcar um horário
+
+- intent: negar
+  examples: |
+    - não
+    - não quero
+    - de jeito nenhum
+    - não obrigado
+    - nem pensar
+    - não é isso
+
+- intent: afirmar
+  examples: |
+    - sim
+    - claro
+    - com certeza
+    - isso mesmo
+    - pode ser
+    - ok
 
 - intent: bot_challenge
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - você é um robô?
+    - você é um humano?
+    - você é um bot?
+    - quem é você?
+    - é você que me ajuda?

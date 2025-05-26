@@ -1,33 +1,139 @@
 version: "3.1"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - saudacao
+  - despedida
+  - horario_funcionamento
+  - pergunta_produto
+  - preco_produto
+  - formas_pagamento
+  - prazo_entrega
+  - pedido_ajuda
+  - reclamacao
+  - agendar_atendimento
+  - negar 
+  - afirmar 
+  - bot_challenge 
+
+entities:
+  - numero_pedido
+  - produto
+  - horario 
+  - data 
+
+slots:
+  numero_pedido:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: numero_pedido
+    influence_conversation: true 
+    auto_fill: true 
+  produto:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: produto
+    influence_conversation: true
+    auto_fill: true
+  horario:
+    type: text 
+    mappings:
+      - type: from_entity
+        entity: horario
+    influence_conversation: true
+    auto_fill: true
+  data: 
+    type: text
+    mappings:
+      - type: from_entity
+        entity: data
+    influence_conversation: true
+    auto_fill: true
+
+forms:
+  agendamento_form:
+    required_slots:
+      - horario
+      - data
+  consulta_status_form:
+    required_slots:
+      - numero_pedido
 
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
+  utter_saudacao:
+    - text: "Olá! Como posso te ajudar hoje?"
+    - text: "Oi! Em que posso ser útil?"
+    - text: "Seja bem-vindo(a)! Como posso auxiliar?"
+
+  utter_despedida:
+    - text: "Até logo! Volte sempre!"
+    - text: "Adeus! Foi um prazer ajudar."
+    - text: "Tchau! Tenha um ótimo dia!"
+
+  utter_horario_funcionamento:
+    - text: "Estamos abertos de segunda a sexta-feira, das 8h às 18h."
+    - text: "Nosso horário de atendimento é de segunda a sexta, das 8h às 18h."
+    - text: "Funcionamos de 8h às 18h, de segunda a sexta-feira."
+
+  utter_pergunta_produto:
+    - text: "Temos vários produtos! Quer saber mais sobre algum em especial?"
+    - text: "Nossa linha de produtos é vasta. O que você procura?"
+    - text: "Para qual produto você gostaria de informações?"
+
+  utter_pedido_ajuda:
+    - text: "Claro! Me diga como posso ajudar."
+    - text: "Conte-me mais sobre o que você precisa."
+    - text: "Estou aqui para ajudar. Qual é a sua dúvida ou problema?"
+
+  utter_formas_pagamento:
+    - text: "Aceitamos cartão de crédito, débito, Pix e boleto bancário."
+    - text: "Você pode pagar com cartão (crédito/débito), Pix ou boleto."
+    - text: "Disponibilizamos as seguintes formas de pagamento: cartão, Pix e boleto."
+
+  utter_reclamacao:
+    - text: "Sentimos muito pelo transtorno! Por favor, me diga o que aconteceu para que eu possa registrar sua reclamação."
+    - text: "Peço desculpas pelo ocorrido. Descreva seu problema para que eu possa encaminhar."
+    - text: "Entendo sua insatisfação. Para registrar sua reclamação, preciso de mais detalhes."
+
+  utter_prazo_entrega:
+    - text: "O prazo médio de entrega é de 5 a 7 dias úteis."
+    - text: "A entrega geralmente ocorre em 5 a 7 dias úteis."
+    - text: "Estimamos um prazo de entrega de 5 a 7 dias úteis."
 
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+    - text: "Isso me anima! O que mais posso fazer por você?"
 
   utter_did_that_help:
-  - text: "Did that help you?"
+    - text: "Ajudei em algo?"
 
   utter_happy:
-  - text: "Great, carry on!"
+    - text: "Que bom que pude ajudar!"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "Até mais!"
+    - text: "Tchau!"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+    - text: "Eu sou um bot, desenvolvido para te ajudar!"
+
+  utter_ask_horario:
+    - text: "Para qual horário você gostaria de agendar?"
+  utter_ask_data:
+    - text: "Para qual dia você gostaria de agendar?"
+  utter_agendamento_cancelado:
+    - text: "Agendamento cancelado. Posso ajudar em algo mais?"
+
+  utter_ask_numero_pedido:
+    - text: "Por favor, qual o número do seu pedido?"
+  utter_status_nao_encontrado:
+    - text: "Não foi possível encontrar informações sobre o pedido {numero_pedido}. Poderia verificar o número?"
+
+actions:
+  - action_consultar_status
+  - action_informar_preco
+  - action_agendar_atendimento
+  - action_fallback_message 
 
 session_config:
   session_expiration_time: 60

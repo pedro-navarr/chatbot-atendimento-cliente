@@ -1,13 +1,85 @@
 version: "3.1"
 
 rules:
-
-- rule: Say goodbye anytime the user says goodbye
+- rule: Responder saudação
   steps:
-  - intent: goodbye
-  - action: utter_goodbye
+    - intent: saudacao
+    - action: utter_saudacao
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: Responder despedida
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+    - intent: despedida
+    - action: utter_despedida
+
+- rule: Informar horário de funcionamento
+  steps:
+    - intent: horario_funcionamento
+    - action: utter_horario_funcionamento
+
+- rule: Responder sobre produtos (genérico)
+  steps:
+    - intent: pergunta_produto
+    - action: utter_pergunta_produto
+
+- rule: Informar formas de pagamento
+  steps:
+    - intent: formas_pagamento
+    - action: utter_formas_pagamento
+
+- rule: Informar prazo de entrega
+  steps:
+    - intent: prazo_entrega
+    - action: utter_prazo_entrega
+
+- rule: Responder pedido de ajuda
+  steps:
+    - intent: pedido_ajuda
+    - action: utter_pedido_ajuda
+
+- rule: Responder reclamação
+  steps:
+    - intent: reclamacao
+    - action: utter_reclamacao
+
+- rule: Agendar atendimento (ativa o form)
+  steps:
+    - intent: agendar_atendimento
+    - action: agendamento_form
+    - active_loop: agendamento_form
+
+- rule: Consultar status de pedido (ativa o form)
+  steps:
+    - intent: consultar_status
+    - action: consulta_status_form
+    - active_loop: consulta_status_form
+
+- rule: Falar que é um bot
+  steps:
+    - intent: bot_challenge
+    - action: utter_iamabot
+
+- rule: Lidar com Negação durante forms
+  condition:
+    - active_loop: agendamento_form
+  steps:
+    - intent: negar
+    - action: utter_agendamento_cancelado
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+
+- rule: Lidar com Negação durante form de status
+  condition:
+    - active_loop: consulta_status_form
+  steps:
+    - intent: negar
+    - action: utter_despedida
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+
+# Regra para fallback (quando o bot não entende)
+- rule: Fallback - não entendi
+  steps:
+    - intent: nlu_fallback 
+    - action: action_fallback_message

@@ -1,30 +1,80 @@
 version: "3.1"
 
 stories:
-
-- story: happy path
+- story: Fluxo de saudação e ajuda
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+    - intent: saudacao
+    - action: utter_saudacao
+    - intent: pedido_ajuda
+    - action: utter_pedido_ajuda
 
-- story: sad path 1
+- story: Consulta de preço de produto - com slot preenchido
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+    - intent: preco_produto
+      entities:
+        - produto: "notebook"
+    - slot_was_set:
+        - produto: "notebook"
+    - action: action_informar_preco
 
-- story: sad path 2
+- story: Consulta de preço de produto - sem slot, bot pergunta
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+    - intent: preco_produto # Ex: "Qual o preço?"
+    - action: utter_pergunta_produto # Bot pergunta "Qual produto você procura?"
+    - intent: preco_produto # Usuário responde "do celular"
+      entities:
+        - produto: "celular"
+    - slot_was_set:
+        - produto: "celular"
+    - action: action_informar_preco
+
+- story: Agendamento de atendimento - via form completo
+  steps:
+    - intent: agendar_atendimento
+    - action: agendamento_form
+    - active_loop: agendamento_form
+    - slot_was_set:
+        - horario: "14h"
+        - data: "amanhã"
+    - active_loop: null
+    - action: action_agendar_atendimento
+
+- story: Agendamento de atendimento - com negação do form
+  steps:
+    - intent: agendar_atendimento
+    - action: agendamento_form
+    - active_loop: agendamento_form
+    - intent: negar
+    - action: utter_agendamento_cancelado
+    - active_loop: null # Sai do form
+
+- story: Reclamação e encaminhamento para ajuda
+  steps:
+    - intent: reclamacao
+    - action: utter_reclamacao
+    - intent: pedido_ajuda
+    - action: utter_pedido_ajuda
+
+- story: Consulta de status de pedido - com form
+  steps:
+    - intent: consultar_status
+    - action: consulta_status_form
+    - active_loop: consulta_status_form
+    - slot_was_set:
+        - numero_pedido: "12345"
+    - active_loop: null
+    - action: action_consultar_status
+
+- story: Consulta de status de pedido - com negação do form
+  steps:
+    - intent: consultar_status
+    - action: consulta_status_form
+    - active_loop: consulta_status_form
+    - intent: negar
+    - action: utter_despedida # Ou outra resposta apropriada
+    - active_loop: null
+
+- story: Bot challenge
+  steps:
+    - intent: bot_challenge
+    - action: utter_iamabot
