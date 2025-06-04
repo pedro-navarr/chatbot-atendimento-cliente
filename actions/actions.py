@@ -4,7 +4,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from rasa_sdk.events import SlotSet, EventType
 
-# Nova ação de fallback para quando o bot não entende
+# Ação de fallback para quando o bot não entende
 class ActionFallbackMessage(Action):
     def name(self) -> Text:
         return "action_fallback_message"
@@ -19,9 +19,9 @@ class ActionFallbackMessage(Action):
             text="Desculpe, não entendi. Você pode reformular sua pergunta ou me dizer como posso ajudar?"
         )
         return []
+    
 
-
-# Consultar status de pedido - Agora utiliza o Form
+# Consultar status de pedido 
 class ActionConsultarStatus(Action):
 
     def name(self) -> Text:
@@ -37,7 +37,7 @@ class ActionConsultarStatus(Action):
         numero_pedido = tracker.get_slot("numero_pedido")
 
         if numero_pedido:
-            # Lógica simulada baseada no número do pedido
+
             if numero_pedido == "12345":
                 dispatcher.utter_message(
                     text=f"O pedido {numero_pedido} está em trânsito e deve chegar em até 2 dias úteis."
@@ -55,7 +55,7 @@ class ActionConsultarStatus(Action):
                     text=f"Não encontramos informações detalhadas sobre o pedido {numero_pedido}. Por favor, verifique o número ou entre em contato com nosso suporte."
                 )
         else:
-            # Isso deve ser tratado principalmente pelo form, mas é um fallback
+
             dispatcher.utter_message(text="Por favor, informe o número do seu pedido.")
             
         return []
@@ -119,9 +119,7 @@ class ValidateAgendamentoForm(FormValidationAction):
         horario_limite_fim = 18
 
         try:
-            # Tenta converter o horário para int (ex: '14h' -> 14)
-            # Pode ser mais complexo com Regex para '9:30', 'duas da tarde'
-            # Para simplificar aqui, assumindo '10h', '14h', etc.
+
             if 'h' in str(slot_value).lower():
                 horario_num = int(str(slot_value).lower().replace('h', ''))
             else:
@@ -133,7 +131,7 @@ class ValidateAgendamentoForm(FormValidationAction):
                 dispatcher.utter_message(
                     text="Nosso horário de atendimento é das 8h às 18h. Por favor, escolha um horário dentro desse intervalo."
                 )
-                return {"horario": None} # Zera o slot para que o bot peça novamente
+                return {"horario": None} 
         except ValueError:
             dispatcher.utter_message(
                 text="Esse não parece ser um horário válido. Por favor, tente um formato como '14h' ou '10'."
@@ -148,10 +146,7 @@ class ValidateAgendamentoForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Valida a data do agendamento (Exemplo simples)."""
-        # Aqui, você pode integrar com uma biblioteca de parsing de datas
-        # como 'dateparser' ou a entidade Duckling para validação real.
-        # Para este exemplo, vamos aceitar qualquer string, mas em um bot real
-        # você faria uma validação se a data é futura, não é feriado, etc.
+
         if isinstance(slot_value, str) and len(slot_value) > 2: # Evita strings muito curtas
              dispatcher.utter_message(
                  text=f"Entendido, a data escolhida foi {slot_value}."
@@ -162,7 +157,7 @@ class ValidateAgendamentoForm(FormValidationAction):
              return {"data": None}
 
 
-# Agendar atendimento - Acionada pelo Form
+# Agendar atendimento 
 class ActionAgendarAtendimento(Action):
 
     def name(self) -> Text:
@@ -182,7 +177,7 @@ class ActionAgendarAtendimento(Action):
             dispatcher.utter_message(
                 text=f"Seu atendimento foi agendado para às {horario} do dia {data}. Em breve você receberá uma confirmação por e-mail."
             )
-        elif horario: # Caso a data não tenha sido capturada por algum motivo
+        elif horario:
             dispatcher.utter_message(
                 text=f"Seu atendimento foi agendado para às {horario}. Por favor, confirme a data desejada."
             )
@@ -207,7 +202,7 @@ class ValidateConsultaStatusForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Valida se o número do pedido parece um número válido."""
-        # Exemplo simples: verifica se é um número e tem um comprimento razoável
+        
         if isinstance(slot_value, str) and slot_value.isdigit() and 3 <= len(slot_value) <= 10:
             return {"numero_pedido": slot_value}
         else:

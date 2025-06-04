@@ -78,7 +78,7 @@ rules:
     - slot_was_set:
         - requested_slot: null
 
-# Regra para fallback (quando o bot não entende)
+# Regra para fallback
 - rule: Fallback - não entendi
   steps:
     - intent: nlu_fallback 
